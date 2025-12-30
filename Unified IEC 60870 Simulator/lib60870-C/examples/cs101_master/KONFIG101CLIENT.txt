@@ -1,0 +1,12 @@
+Interface=/dev/ttyS0
+Bandwidth=9600
+Common Address=4859
+
+PERIOD=25
+SYNC=1
+
+DATALOGS=1
+DATAPATH=DATALOG.txt
+SERVICELOGS=1
+SERVICEPATH=SERVICELOG.txt
+

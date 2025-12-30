@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="IEC 104 komunikace">
+        <intProp name="ThreadGroup.num_threads">1</intProp>
+        <intProp name="ThreadGroup.ramp_time">1</intProp>
+        <stringProp name="ThreadGroup.duration">${testDuration}</stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <intProp name="LoopController.loops">-1</intProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler">
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="script">import java.net.Socket
+import java.io.*
+import org.apache.jmeter.samplers.SampleResult
+
+// ---- pomocné čtení parametrů (props &gt; UDV &gt; default) ----
+String P(String k, String d){ (props.get(k) ?: vars.get(k) ?: d).toString() }
+int    Pint(String k, String d){ P(k,d).toInteger() }
+int    Phex3(String k, String d){ Integer.parseInt(P(k,d).replace(&quot;0x&quot;,&quot;&quot;).replace(&quot;0X&quot;,&quot;&quot;), 16) }
+
+// ---- parametry ----
+String host = P(&quot;serverAddress&quot;,&quot;127.0.0.1&quot;)
+int    port = Pint(&quot;serverPort&quot;,&quot;2404&quot;)
+
+int ca   = Pint(&quot;ASDU_CA&quot;,&quot;55&quot;)       // dec
+int oa   = Pint(&quot;ASDU_OA&quot;,&quot;0&quot;)        // dec
+int ioaI = Phex3(&quot;IOA_INT&quot;,&quot;000000&quot;)  // hex 3B
+int ioaC = Phex3(&quot;IOA_CMD&quot;,&quot;000001&quot;)  // hex 3B
+
+int cmdType = Pint(&quot;cmdType&quot;,&quot;45&quot;)    // 45 single / 46 double
+int val     = Integer.parseInt(P(&quot;value&quot;,&quot;01&quot;),16)
+int qoi     = Pint(&quot;qoi&quot;,&quot;20&quot;)        // 20 = 0x14 (all stations)
+int delayMs = Pint(&quot;delayMs&quot;,&quot;600&quot;)
+
+// ---- rámce U ----
+byte[] STARTDT = [0x68,0x04,0x07,0x00,0x00,0x00] as byte[]
+byte[] STOPDT  = [0x68,0x04,0x13,0x00,0x00,0x00] as byte[]
+
+// ---- sekvence APCI ----
+int ns=0, nr=0
+
+// ---- výstupy pro listener a log ----
+StringBuilder TX=new StringBuilder()
+StringBuilder RX=new StringBuilder()
+
+Socket s=null; InputStream in=null; OutputStream out=null
+try{
+  s=new Socket(host,port)
+  s.soTimeout=3000
+  in=s.getInputStream()
+  out=s.getOutputStream()
+
+  // STARTDT
+  out.write(STARTDT); out.flush()
+  TX.append(&quot;-&gt; STARTDT\n&quot;).append(hex(STARTDT)).append(&quot;\n&quot;)
+  readSome(&quot;after STARTDT&quot;, in, RX)
+
+  // 1) TI=100 (interrogation all stations, COT=6, QOI=qoi)
+  sendI(out, asdu(100,6,oa,ca,ioaI,qoi), ns, nr, TX); ns=(ns+1)&amp;0x7FFF
+  Thread.sleep(delayMs); readSome(&quot;after TI=100&quot;, in, RX)
+
+  // 2) TI=45/46 (command) na IOA_CMD s hodnotou &apos;val&apos;
+  sendI(out, asdu(cmdType,6,oa,ca,ioaC,val), ns, nr, TX); ns=(ns+1)&amp;0x7FFF
+  Thread.sleep(delayMs); readSome(&quot;after TI=&quot;+cmdType, in, RX)
+
+  // 3) TI=100 znovu pro ověření stavu
+  sendI(out, asdu(100,6,oa,ca,ioaI,qoi), ns, nr, TX); ns=(ns+1)&amp;0x7FFF
+  Thread.sleep(delayMs); readSome(&quot;after TI=100 (2nd)&quot;, in, RX)
+
+  // STOPDT
+  out.write(STOPDT); out.flush()
+  TX.append(&quot;-&gt; STOPDT\n&quot;).append(hex(STOPDT)).append(&quot;\n&quot;)
+  readSome(&quot;after STOPDT&quot;, in, RX)
+
+} catch(Exception e){
+  RX.append(&quot;ERROR: &quot;).append(e.getMessage()).append(&quot;\n&quot;)
+} finally {
+  try{in?.close()}catch(ignore){}
+  try{out?.close()}catch(ignore){}
+  try{s?.close()}catch(ignore){}
+
+  // -&gt; Log Viewer (konzole)
+  log.info(&quot;IEC104 TX:\n&quot;+TX.toString())
+  log.info(&quot;IEC104 RX:\n&quot;+RX.toString())
+
+  // -&gt; View Results Tree, pokud je k dispozici &apos;prev&apos;
+  if (prev!=null){
+    prev.setSamplerData(TX.toString())
+    prev.setResponseData(RX.toString(),&quot;UTF-8&quot;)
+    prev.setDataType(SampleResult.TEXT)
+    prev.setResponseCode(&quot;200&quot;)
+    prev.setResponseMessage(&quot;OK&quot;)
+    prev.setSuccessful(true)
+  }
+}
+
+// ---------- helpers ----------
+void sendI(OutputStream out, byte[] asdu, int ns, int nr, StringBuilder TX){
+  int len = 4 + asdu.length
+  byte[] frm = new byte[2+len]
+  frm[0]=0x68; frm[1]=(byte)len
+  frm[2]=(byte)((ns&lt;&lt;1)&amp;0xFE); frm[3]=(byte)(ns&gt;&gt;&gt;7)
+  frm[4]=(byte)((nr&lt;&lt;1)&amp;0xFE); frm[5]=(byte)(nr&gt;&gt;&gt;7)
+  System.arraycopy(asdu,0,frm,6,asdu.length)
+  out.write(frm); out.flush()
+  TX.append(String.format(&quot;-&gt; I TI=%02X ns=%d nr=%d%n&quot;, asdu[0], ns, nr))
+    .append(hex(frm)).append(&quot;\n&quot;)
+}
+
+byte[] asdu(int ti,int cot,int oa,int ca,int ioa,int qv){
+  byte[] head=[(byte)ti,0x01,(byte)cot,(byte)oa,(byte)(ca&amp;0xFF),(byte)((ca&gt;&gt;8)&amp;0xFF)] as byte[]
+  byte[] ioa3=[(byte)(ioa&amp;0xFF),(byte)((ioa&gt;&gt;8)&amp;0xFF),(byte)((ioa&gt;&gt;16)&amp;0xFF)] as byte[]
+  byte[] tail=[(byte)qv] as byte[]
+  byte[] a=new byte[head.length+ioa3.length+tail.length]
+  System.arraycopy(head,0,a,0,head.length)
+  System.arraycopy(ioa3,0,a,head.length,ioa3.length)
+  System.arraycopy(tail,0,a,head.length+ioa3.length,tail.length)
+  return a
+}
+
+void readSome(String tag, InputStream in, StringBuilder RX){
+  try{
+    byte[] b=new byte[4096]; int n=in.read(b)
+    if(n&gt;0){
+      byte[] d=java.util.Arrays.copyOf(b,n)
+      RX.append(&quot;&lt;- &quot;).append(tag).append(&quot;\n&quot;).append(hex(d)).append(&quot;\n&quot;)
+      parseAPDUs(d, RX)
+    } else {
+      RX.append(&quot;&lt;- &quot;).append(tag).append(&quot; (no data)\n&quot;)
+    }
+  }catch(InterruptedIOException t){
+    RX.append(&quot;&lt;- &quot;).append(tag).append(&quot; (timeout)\n&quot;)
+  }
+}
+
+void parseAPDUs(byte[] buf, StringBuilder RX){
+  int off=0
+  while(off+2&lt;=buf.length){
+    if(buf[off]!=0x68){ off++; continue }
+    int len=buf[off+1]&amp;0xFF
+    if(off+2+len&gt;buf.length) break
+    int c0=buf[off+2]&amp;0xFF, c1=buf[off+3]&amp;0xFF, c2=buf[off+4]&amp;0xFF, c3=buf[off+5]&amp;0xFF
+    if( (c0 &amp; 0x01)==0 ){                   // I-frame
+      int ns=((c0&amp;0xFE)&gt;&gt;1) | (c1&lt;&lt;7)
+      int nr=((c2&amp;0xFE)&gt;&gt;1) | (c3&lt;&lt;7)
+      RX.append(String.format(&quot;   [I-ACK] ns=%d nr=%d&quot;, ns,nr))
+      if(len&gt;=9){
+        int ti=buf[off+6]&amp;0xFF; int cot=buf[off+8]&amp;0xFF
+        RX.append(String.format(&quot; TI=%d COT=%d&quot;, ti,cot))
+      }
+      RX.append(&quot;\n&quot;)
+    } else if( (c0 &amp; 0x03)==0x01 ){         // S-frame
+      int nr=((c2&amp;0xFE)&gt;&gt;1) | (c3&lt;&lt;7)
+      RX.append(String.format(&quot;   [S-ACK] nr=%d%n&quot;, nr))
+    } else {                                // U-frame
+      RX.append(String.format(&quot;   [U] ctrl=%02X %02X %02X %02X%n&quot;,c0,c1,c2,c3))
+    }
+    off += 2+len
+  }
+}
+
+String hex(byte[] buf){ StringBuilder sb=new StringBuilder(); for(byte bb: buf) sb.append(String.format(&quot;%02X &quot;,bb)); return sb.toString() }
+</stringProp>
+          <stringProp name="scriptLanguage">groovy</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="serverAddress" elementType="Argument">
+              <stringProp name="Argument.name">serverAddress</stringProp>
+              <stringProp name="Argument.value">192.168.211.129</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="IOA_CMD" elementType="Argument">
+              <stringProp name="Argument.name">IOA_CMD</stringProp>
+              <stringProp name="Argument.value">000001</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="cmdType" elementType="Argument">
+              <stringProp name="Argument.name">cmdType</stringProp>
+              <stringProp name="Argument.value">45</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="value" elementType="Argument">
+              <stringProp name="Argument.name">value</stringProp>
+              <stringProp name="Argument.value">01</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="delayMs" elementType="Argument">
+              <stringProp name="Argument.name">delayMs</stringProp>
+              <stringProp name="Argument.value">600</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="ASDU_CA" elementType="Argument">
+              <stringProp name="Argument.name">ASDU_CA</stringProp>
+              <stringProp name="Argument.value">150</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="ASDU_OA" elementType="Argument">
+              <stringProp name="Argument.name">ASDU_OA</stringProp>
+              <stringProp name="Argument.value">15</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="serverPort" elementType="Argument">
+              <stringProp name="Argument.name">serverPort</stringProp>
+              <stringProp name="Argument.value">2404</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="IOA_INT" elementType="Argument">
+              <stringProp name="Argument.name">IOA_INT</stringProp>
+              <stringProp name="Argument.value">000000</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="qoi" elementType="Argument">
+              <stringProp name="Argument.name">qoi</stringProp>
+              <stringProp name="Argument.value">20</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="testDuration" elementType="Argument">
+              <stringProp name="Argument.name">testDuration</stringProp>
+              <stringProp name="Argument.value">20</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="icmpInterval" elementType="Argument">
+              <stringProp name="Argument.name">icmpInterval</stringProp>
+              <stringProp name="Argument.value">u10000</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="icmpSize" elementType="Argument">
+              <stringProp name="Argument.name">icmpSize</stringProp>
+              <stringProp name="Argument.value">56</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="icmpFlood" elementType="Argument">
+              <stringProp name="Argument.name">icmpFlood</stringProp>
+              <stringProp name="Argument.value">false</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
+        <ResultCollector guiclass="TableVisualizer" testclass="ResultCollector" testname="View Results in Table">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="Simple Data Writer" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="ICMP DoS">
+        <intProp name="ThreadGroup.num_threads">1</intProp>
+        <intProp name="ThreadGroup.ramp_time">1</intProp>
+        <stringProp name="ThreadGroup.duration">${testDuration}</stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <intProp name="LoopController.loops">-1</intProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <SystemSampler guiclass="SystemSamplerGui" testclass="SystemSampler" testname="OS Process Sampler">
+          <boolProp name="SystemSampler.checkReturnCode">false</boolProp>
+          <stringProp name="SystemSampler.expectedReturnCode">0</stringProp>
+          <stringProp name="SystemSampler.command">/usr/bin/timeout</stringProp>
+          <elementProp name="SystemSampler.arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="Argument">
+                <stringProp name="Argument.name"></stringProp>
+                <stringProp name="Argument.value">${testDuration}s /usr/sbin/hping3 -1 ${serverAddress} -i ${icmpInterval} -d ${icmpSize} ${__groovy(vars.get(&apos;icmpFlood&apos;)==&apos;true&apos;?&apos;--flood&apos;:&apos;&apos;)} -q </stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <elementProp name="SystemSampler.environment" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="SystemSampler.directory"></stringProp>
+        </SystemSampler>
+        <hashTree/>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="serverAddress" elementType="Argument">
+              <stringProp name="Argument.name">serverAddress</stringProp>
+              <stringProp name="Argument.value">192.168.211.129</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="IOA_CMD" elementType="Argument">
+              <stringProp name="Argument.name">IOA_CMD</stringProp>
+              <stringProp name="Argument.value">000001</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="cmdType" elementType="Argument">
+              <stringProp name="Argument.name">cmdType</stringProp>
+              <stringProp name="Argument.value">45</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="value" elementType="Argument">
+              <stringProp name="Argument.name">value</stringProp>
+              <stringProp name="Argument.value">01</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="delayMs" elementType="Argument">
+              <stringProp name="Argument.name">delayMs</stringProp>
+              <stringProp name="Argument.value">600</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="ASDU_CA" elementType="Argument">
+              <stringProp name="Argument.name">ASDU_CA</stringProp>
+              <stringProp name="Argument.value">150</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="ASDU_OA" elementType="Argument">
+              <stringProp name="Argument.name">ASDU_OA</stringProp>
+              <stringProp name="Argument.value">15</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="serverPort" elementType="Argument">
+              <stringProp name="Argument.name">serverPort</stringProp>
+              <stringProp name="Argument.value">2404</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="IOA_INT" elementType="Argument">
+              <stringProp name="Argument.name">IOA_INT</stringProp>
+              <stringProp name="Argument.value">000000</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="qoi" elementType="Argument">
+              <stringProp name="Argument.name">qoi</stringProp>
+              <stringProp name="Argument.value">20</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="testDuration" elementType="Argument">
+              <stringProp name="Argument.name">testDuration</stringProp>
+              <stringProp name="Argument.value">20</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="icmpInterval" elementType="Argument">
+              <stringProp name="Argument.name">icmpInterval</stringProp>
+              <stringProp name="Argument.value">u10000</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="icmpSize" elementType="Argument">
+              <stringProp name="Argument.name">icmpSize</stringProp>
+              <stringProp name="Argument.value">56</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="icmpFlood" elementType="Argument">
+              <stringProp name="Argument.name">icmpFlood</stringProp>
+              <stringProp name="Argument.value">false</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="icmpCount" elementType="Argument">
+              <stringProp name="Argument.name">icmpCount</stringProp>
+              <stringProp name="Argument.value">2000</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="Simple Data Writer">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <SystemSampler guiclass="SystemSamplerGui" testclass="SystemSampler" testname="pcap">
+          <boolProp name="SystemSampler.checkReturnCode">false</boolProp>
+          <stringProp name="SystemSampler.expectedReturnCode">0</stringProp>
+          <stringProp name="SystemSampler.command">/usr/bin/timeout</stringProp>
+          <elementProp name="SystemSampler.arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="Argument">
+                <stringProp name="Argument.name"></stringProp>
+                <stringProp name="Argument.value">${testDuration}s /usr/sbin/tcpdump -i any -w results/dos_${__time(YMMdd_HHmmss)}.pcap &apos;icmp or tcp port 2404&apos; </stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <elementProp name="SystemSampler.environment" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="SystemSampler.directory"></stringProp>
+        </SystemSampler>
+        <hashTree/>
+        <SystemSampler guiclass="SystemSamplerGui" testclass="SystemSampler" testname="OS Process Sampler">
+          <boolProp name="SystemSampler.checkReturnCode">false</boolProp>
+          <stringProp name="SystemSampler.expectedReturnCode">0</stringProp>
+          <stringProp name="SystemSampler.command">/usr/sbin/hping3</stringProp>
+          <elementProp name="SystemSampler.arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="Argument">
+                <stringProp name="Argument.name"></stringProp>
+                <stringProp name="Argument.value">-1 ${serverAddress} -i ${icmpInterval} -d ${icmpSize} -c ${icmpCount} ${__groovy(vars.get(&apos;icmpFlood&apos;)==&apos;true&apos;?&apos;--flood&apos;:&apos;&apos;)} -v </stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <elementProp name="SystemSampler.environment" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="SystemSampler.directory"></stringProp>
+          <stringProp name="SystemSampler.stdout">/home/klient/apache-jmeter-5.6.3/results/hping_stdout_${__time(YMMdd_HHmmss)}.log</stringProp>
+          <stringProp name="SystemSampler.stderr">/home/klient/apache-jmeter-5.6.3/results/hping_stderr_${__time(YMMdd_HHmmss)}.log</stringProp>
+        </SystemSampler>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

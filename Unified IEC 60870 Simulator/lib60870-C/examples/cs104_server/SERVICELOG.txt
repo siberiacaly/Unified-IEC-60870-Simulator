@@ -1,0 +1,510 @@
+2024-05-12 15:18:49 Server started 
+2024-05-12 15:18:55 New connection request from 192.168.211.128: 
+2024-05-12 15:18:55 Connection opened 
+2024-05-12 15:18:55 Connection activated 
+2024-05-12 15:19:05 Received interrogation for group (20).
+2024-05-12 15:19:15 Received interrogation for group (20).
+2024-05-12 15:19:24 Received interrogation for group (20).
+2024-05-12 15:25:09 Server started 
+2024-05-12 15:25:11 New connection request from 192.168.211.128: 
+2024-05-12 15:25:11 Connection opened 
+2024-05-12 15:25:11 Connection activated 
+2024-05-12 15:25:35 Received interrogation for group (20).
+2024-05-12 15:30:22 Server started 
+2024-05-12 15:30:33 New connection request from 192.168.211.128 
+2024-05-12 15:30:33 Connection opened 
+2024-05-12 15:30:33 Connection activated 
+2024-05-12 15:30:58 Received interrogation for group (20).
+2024-05-12 15:31:17 Connection closed 
+2024-05-12 15:35:09 Server started 
+2024-05-12 15:35:13 Server started 
+2024-05-12 15:35:17 Server started 
+2024-05-12 15:35:20 New connection request from 192.168.211.128 
+2024-05-12 15:35:20 Connection opened 
+2024-05-12 15:35:20 Connection activated 
+2024-05-12 15:35:45 Received interrogation for group (20).
+2024-05-12 15:43:06 Server started 
+2024-05-12 15:43:09 New connection request from 192.168.211.128 
+2024-05-12 15:43:09 Connection opened 
+2024-05-12 15:43:09 Connection activated 
+2024-05-12 15:43:34 Received interrogation for group (20).
+2024-05-12 15:49:57 Server started 
+2024-05-12 15:50:00 New connection request from 192.168.211.128 
+2024-05-12 15:50:00 Connection opened 
+2024-05-12 15:50:00 Connection activated 
+2024-05-12 15:50:24 Received interrogation for group (20).
+2024-05-12 15:52:51 Server started 
+2024-05-12 15:52:54 New connection request from 192.168.211.128 
+2024-05-12 15:52:54 Connection opened 
+2024-05-12 15:52:54 Connection activated 
+2024-05-12 15:53:04 Received interrogation for group (20).
+2024-05-12 15:53:14 Received interrogation for group (20).
+2024-05-12 15:53:24 Received interrogation for group (20).
+2024-05-12 15:53:34 Received interrogation for group (20).
+2024-05-12 15:53:44 Received interrogation for group (20).
+2024-05-12 15:53:54 Received interrogation for group (20).
+2024-05-12 15:54:03 Received interrogation for group (20).
+2024-05-12 15:54:13 Received interrogation for group (20).
+2024-05-12 15:54:23 Received interrogation for group (20).
+2024-05-12 15:54:34 Received interrogation for group (20).
+2024-05-12 15:54:37 Connection closed 
+2024-05-12 16:01:50 Server started 
+2024-05-12 16:01:56 New connection request from 192.168.211.128 
+2024-05-12 16:01:56 Connection opened 
+2024-05-12 16:01:56 Connection activated 
+2024-05-12 16:02:05 Received interrogation for group (20).
+2024-05-12 16:02:16 Connection closed 
+2024-05-12 16:03:03 New connection request from 192.168.211.128 
+2024-05-12 16:03:03 Connection opened 
+2024-05-12 16:03:03 Connection activated 
+2024-05-12 16:03:13 Received interrogation for group (20).
+2024-05-12 16:03:19 Connection closed 
+2024-05-12 16:08:50 New connection request from 192.168.211.128 
+2024-05-12 16:08:50 Connection opened 
+2024-05-12 16:08:50 Connection activated 
+2024-05-12 16:09:00 Received interrogation for group (20).
+2024-05-12 16:09:10 Received interrogation for group (20).
+2024-05-12 16:09:16 Connection closed 
+2024-05-12 16:11:51 Server started 
+2024-05-12 16:11:56 New connection request from 192.168.211.128 
+2024-05-12 16:11:56 Connection opened 
+2024-05-12 16:11:56 Connection activated 
+2024-05-12 16:12:06 Received interrogation for group (20).
+2024-05-12 16:12:16 Connection closed 
+2024-05-12 16:12:55 Server started 
+2024-05-12 16:12:58 New connection request from 192.168.211.128 
+2024-05-12 16:12:58 Connection opened 
+2024-05-12 16:12:58 Connection activated 
+2024-05-12 16:13:07 Received interrogation for group (20).
+2024-05-12 16:13:15 Connection closed 
+2024-05-12 16:19:03 Server started 
+2024-05-12 16:19:07 New connection request from 192.168.211.128 
+2024-05-12 16:19:07 Connection opened 
+2024-05-12 16:19:07 Connection activated 
+2024-05-12 16:19:17 Received interrogation for group (20).
+2024-05-12 16:19:19 Connection closed 
+2024-05-12 16:20:04 Server started 
+2024-05-12 16:20:07 New connection request from 192.168.211.128 
+2024-05-12 16:20:07 Connection opened 
+2024-05-12 16:20:07 Connection activated 
+2024-05-12 16:20:17 Received interrogation for group (20).
+2024-05-12 16:20:19 Connection closed 
+2024-05-12 16:22:24 New connection request from 192.168.211.128 
+2024-05-12 16:22:24 Connection opened 
+2024-05-12 16:22:24 Connection activated 
+2024-05-12 16:22:33 Received interrogation for group (20).
+2024-05-12 16:22:37 Connection closed 
+2024-05-12 16:23:51 New connection request from 192.168.211.128 
+2024-05-12 16:23:51 Connection opened 
+2024-05-12 16:23:51 Connection activated 
+2024-05-12 16:24:00 Received interrogation for group (20).
+2024-05-12 16:24:09 Connection closed 
+2024-05-12 16:26:00 New connection request from 192.168.211.128 
+2024-05-12 16:26:00 Connection opened 
+2024-05-12 16:26:00 Connection activated 
+2024-05-12 16:26:10 Received interrogation for group (20).
+2024-05-12 16:26:18 Connection closed 
+2024-05-12 20:41:28 Server started 
+2024-05-12 20:41:30 New connection request from 192.168.211.128 
+2024-05-12 20:41:30 Connection opened 
+2024-05-12 20:41:30 Connection activated 
+2024-05-12 20:41:39 Received interrogation for group (20).
+2024-05-12 20:41:49 Received interrogation for group (20).
+2024-05-12 20:41:59 Received interrogation for group (20).
+2024-05-12 20:42:09 Received interrogation for group (20).
+2024-05-12 20:47:17 Server started 
+2024-05-12 20:47:22 New connection request from 192.168.211.128 
+2024-05-12 20:47:22 Connection opened 
+2024-05-12 20:47:22 Connection activated 
+2024-05-12 20:47:31 Received interrogation for group (20).
+2024-05-12 20:47:41 Received interrogation for group (20).
+2024-05-12 20:53:38 Server started 
+2024-05-12 20:53:42 New connection request from 192.168.211.128 
+2024-05-12 20:53:42 Connection opened 
+2024-05-12 20:53:42 Connection activated 
+2024-05-12 20:53:52 Received interrogation for group (20).
+2024-05-12 20:54:02 Received interrogation for group (20).
+2024-05-12 20:54:12 Received interrogation for group (20).
+2024-05-12 20:54:22 Received interrogation for group (20).
+2024-05-12 20:57:19 Server started 
+2024-05-12 20:57:24 New connection request from 192.168.211.128 
+2024-05-12 20:57:24 Connection opened 
+2024-05-12 20:57:24 Connection activated 
+2024-05-12 20:57:34 Received interrogation for group (20).
+2024-05-12 20:58:15 Server started 
+2024-05-12 20:58:19 New connection request from 192.168.211.128 
+2024-05-12 20:58:19 Connection opened 
+2024-05-12 20:58:19 Connection activated 
+2024-05-12 20:58:29 Received interrogation for group (20).
+2024-05-12 21:03:38 Server started 
+2024-05-12 21:03:43 New connection request from 192.168.211.128 
+2024-05-12 21:03:43 Connection opened 
+2024-05-12 21:03:43 Connection activated 
+2024-05-12 21:03:53 Received interrogation for group (20).
+2024-05-12 21:07:50 Server started 
+2024-05-12 21:07:54 New connection request from 192.168.211.128 
+2024-05-12 21:07:54 Connection opened 
+2024-05-12 21:07:54 Connection activated 
+2024-05-12 21:12:12 Server started 
+2024-05-12 21:12:17 New connection request from 192.168.211.128 
+2024-05-12 21:12:17 Connection opened 
+2024-05-12 21:12:17 Connection activated 
+2024-05-12 21:12:27 Received interrogation for group (20).
+2024-05-12 21:18:56 Server started 
+2024-05-12 21:19:00 New connection request from 192.168.211.128 
+2024-05-12 21:19:00 Connection opened 
+2024-05-12 21:19:00 Connection activated 
+2024-05-12 21:20:49 Server started 
+2024-05-12 21:20:52 New connection request from 192.168.211.128 
+2024-05-12 21:20:52 Connection opened 
+2024-05-12 21:20:52 Connection activated 
+2024-05-12 21:26:28 Server started 
+2024-05-12 21:26:32 New connection request from 192.168.211.128 
+2024-05-12 21:26:32 Connection opened 
+2024-05-12 21:26:32 Connection activated 
+2024-05-13 17:57:37 Server started 
+2024-05-13 17:57:47 New connection request from 192.168.211.128 
+2024-05-13 17:57:47 Connection opened 
+2024-05-13 17:57:47 Connection activated 
+2024-05-13 17:58:21 Connection closed 
+2024-05-13 17:59:39 Server started 
+2024-05-13 17:59:42 New connection request from 192.168.211.128 
+2024-05-13 17:59:42 Connection opened 
+2024-05-13 17:59:42 Connection activated 
+2024-05-13 17:59:52 Received interrogation for group (20).
+2024-05-13 18:00:02 Received interrogation for group (20).
+2024-05-13 18:11:44 Server started 
+2024-05-13 18:11:47 New connection request from 192.168.211.128 
+2024-05-13 18:11:47 Connection opened 
+2024-05-13 18:11:47 Connection activated 
+2024-05-13 18:11:56 Received interrogation for group (20).
+2024-05-13 18:17:14 Server started 
+2024-05-13 18:17:16 New connection request from 192.168.211.128 
+2024-05-13 18:17:16 Connection opened 
+2024-05-13 18:17:16 Connection activated 
+2024-05-13 18:17:25 Received interrogation for group (20).
+2024-05-13 18:17:35 Received interrogation for group (20).
+2024-05-13 18:17:43 Connection closed 
+2024-05-13 18:25:09 Server started 
+2024-05-13 18:25:13 New connection request from 192.168.211.128 
+2024-05-13 18:25:13 Connection opened 
+2024-05-13 18:25:13 Connection activated 
+2024-05-13 18:25:22 Received interrogation for group (20).
+2024-05-13 18:25:32 Received interrogation for group (20).
+2024-05-13 18:25:40 Connection closed 
+2024-05-13 18:25:57 New connection request from 192.168.211.128 
+2024-05-13 18:25:57 Connection opened 
+2024-05-13 18:25:57 Connection activated 
+2024-05-13 18:26:06 Received interrogation for group (20).
+2024-05-13 18:26:16 Received interrogation for group (20).
+2024-05-13 18:26:26 Received interrogation for group (20).
+2024-05-13 18:26:32 Connection closed 
+2024-05-13 18:26:54 New connection request from 192.168.211.128 
+2024-05-13 18:26:54 Connection opened 
+2024-05-13 18:26:54 Connection activated 
+2024-05-13 18:27:03 Received interrogation for group (20).
+2024-05-13 18:27:14 Received interrogation for group (20).
+2024-05-13 18:27:24 Received interrogation for group (20).
+2024-05-13 18:27:29 Connection closed 
+2024-05-16 12:57:38 Server started 
+2024-05-16 12:57:44 New connection request from 192.168.211.128 
+2024-05-16 12:57:44 Connection opened 
+2024-05-16 12:57:44 Connection activated 
+2024-05-16 12:57:54 Received interrogation for group (20).
+2024-05-16 12:58:02 Received interrogation for group (20).
+2024-05-16 12:59:10 Server started 
+2024-05-16 12:59:15 New connection request from 192.168.211.128 
+2024-05-16 12:59:15 Connection opened 
+2024-05-16 12:59:15 Connection activated 
+2024-05-16 12:59:25 Received interrogation for group (20).
+2024-05-16 12:59:35 Received interrogation for group (20).
+2024-05-16 12:59:39 Connection closed 
+2024-05-16 12:59:56 New connection request from 192.168.211.128 
+2024-05-16 12:59:56 Connection opened 
+2024-05-16 12:59:56 Connection activated 
+2024-05-16 13:00:02 Connection closed 
+2024-05-16 13:00:03 New connection request from 192.168.211.128 
+2024-05-16 13:00:03 Connection opened 
+2024-05-16 13:00:03 Connection activated 
+2024-05-16 13:00:47 Server started 
+2024-05-16 13:00:49 New connection request from 192.168.211.128 
+2024-05-16 13:00:49 Connection opened 
+2024-05-16 13:00:49 Connection activated 
+2024-05-16 13:01:14 Connection closed 
+2024-05-16 13:01:49 Server started 
+2024-05-16 13:01:53 New connection request from 192.168.211.128 
+2024-05-16 13:01:53 Connection opened 
+2024-05-16 13:01:53 Connection activated 
+2024-05-16 13:02:23 Connection closed 
+2024-05-20 14:18:14 Server started 
+2024-05-20 14:18:53 New connection request from 192.168.211.128 
+2024-05-20 14:18:53 Connection opened 
+2024-05-20 14:18:53 Connection activated 
+2024-05-20 14:20:59 Server started 
+2024-05-20 14:21:03 New connection request from 192.168.211.128 
+2024-05-20 14:21:04 Connection opened 
+2024-05-20 14:21:04 Connection activated 
+2024-05-20 14:21:33 Received interrogation for group (20).
+2024-05-20 14:27:13 Server started 
+2024-05-20 15:05:19 Server started 
+2024-05-20 15:05:26 New connection request from 192.168.211.128 
+2024-05-20 15:05:26 Connection opened 
+2024-05-20 15:05:26 Connection activated 
+2024-05-20 15:06:09 Server started 
+2024-05-20 15:06:25 New connection request from 192.168.211.128 
+2024-05-20 15:06:25 Connection opened 
+2024-05-20 15:06:25 Connection activated 
+2024-05-20 15:19:08 Server started 
+2024-05-20 15:19:14 New connection request from 192.168.211.128 
+2024-05-20 15:19:14 Connection opened 
+2024-05-20 15:19:14 Connection activated 
+2024-05-20 15:19:20 Connection closed 
+2024-05-20 15:23:58 New connection request from 192.168.211.128 
+2024-05-20 15:23:58 Connection opened 
+2024-05-20 15:23:58 Connection activated 
+2024-05-20 15:24:04 Connection closed 
+2024-05-20 16:28:33 Server started 
+2024-05-20 16:28:37 New connection request from 192.168.211.128 
+2024-05-20 16:28:37 Connection opened 
+2024-05-20 16:28:37 Connection activated 
+2024-05-20 16:29:06 Received interrogation for group (20).
+2024-05-20 17:02:17 Server started 
+2024-05-20 17:04:22 Server started 
+2024-05-20 17:19:12 New connection request from 192.168.211.128 
+2024-05-20 17:19:12 Connection opened 
+2024-05-20 17:19:12 Connection activated 
+2024-05-20 17:19:42 Received interrogation for group (20).
+2024-05-20 17:20:12 Received interrogation for group (20).
+2024-05-20 17:20:42 Received interrogation for group (20).
+2024-05-20 17:21:12 Received interrogation for group (20).
+2024-05-20 17:21:42 Received interrogation for group (20).
+2024-05-20 17:22:12 Received interrogation for group (20).
+2024-05-20 17:22:42 Received interrogation for group (20).
+2024-05-20 17:23:12 Received interrogation for group (20).
+2024-05-20 17:23:42 Received interrogation for group (20).
+2024-05-20 17:24:12 Received interrogation for group (20).
+2024-05-20 17:24:42 Received interrogation for group (20).
+2024-05-20 17:25:12 Received interrogation for group (20).
+2024-05-20 17:25:42 Received interrogation for group (20).
+2024-05-20 17:26:13 Server started 
+2024-05-20 17:26:16 New connection request from 192.168.211.128 
+2024-05-20 17:26:16 Connection opened 
+2024-05-20 17:26:16 Connection activated 
+2024-05-20 17:42:43 Server started 
+2024-05-20 17:43:45 Server started 
+2024-05-20 17:44:45 New connection request from 192.168.211.128 
+2024-05-20 17:44:45 Connection opened 
+2024-05-20 17:44:45 Connection activated 
+2024-05-20 17:44:47 Received interrogation for group (20).
+2024-05-20 17:44:50 Connection closed 
+2024-05-20 17:47:13 Server started 
+2024-05-20 17:47:16 New connection request from 192.168.211.128 
+2024-05-20 17:47:16 Connection opened 
+2024-05-20 17:47:16 Connection activated 
+2024-05-20 17:47:45 Received interrogation for group (20).
+2024-05-20 17:48:15 Received interrogation for group (20).
+2024-05-20 17:48:45 Received interrogation for group (20).
+2024-05-20 17:49:15 Received interrogation for group (20).
+2024-05-20 17:49:45 Received interrogation for group (20).
+2024-05-20 17:50:15 Received interrogation for group (20).
+2024-05-20 17:50:45 Received interrogation for group (20).
+2024-05-20 17:51:15 Received interrogation for group (20).
+2024-05-20 17:51:45 Received interrogation for group (20).
+2024-05-20 17:52:15 Received interrogation for group (20).
+2024-05-20 17:52:45 Received interrogation for group (20).
+2024-05-20 17:53:15 Received interrogation for group (20).
+2024-05-20 17:53:45 Received interrogation for group (20).
+2024-05-20 17:54:15 Received interrogation for group (20).
+2024-05-20 17:54:45 Received interrogation for group (20).
+2024-05-20 17:55:15 Received interrogation for group (20).
+2024-05-20 17:55:45 Received interrogation for group (20).
+2024-05-20 17:56:15 Received interrogation for group (20).
+2024-05-20 17:56:45 Received interrogation for group (20).
+2024-05-20 17:57:15 Received interrogation for group (20).
+2024-05-20 17:57:45 Received interrogation for group (20).
+2024-05-20 17:58:15 Received interrogation for group (20).
+2024-05-20 17:58:45 Received interrogation for group (20).
+2024-05-20 17:59:15 Received interrogation for group (20).
+2024-05-20 17:59:45 Received interrogation for group (20).
+2024-05-20 18:00:15 Received interrogation for group (20).
+2024-05-20 18:00:45 Received interrogation for group (20).
+2024-05-20 18:01:15 Received interrogation for group (20).
+2024-05-20 18:01:45 Received interrogation for group (20).
+2024-05-20 18:02:15 Received interrogation for group (20).
+2024-05-20 18:02:45 Received interrogation for group (20).
+2024-05-20 18:03:15 Received interrogation for group (20).
+2024-05-20 18:03:45 Received interrogation for group (20).
+2024-05-20 18:04:15 Received interrogation for group (20).
+2024-05-20 18:04:45 Received interrogation for group (20).
+2024-05-20 18:05:15 Received interrogation for group (20).
+2024-05-20 18:05:45 Received interrogation for group (20).
+2024-05-20 18:06:15 Received interrogation for group (20).
+2024-05-20 18:06:45 Received interrogation for group (20).
+2024-05-20 18:07:15 Received interrogation for group (20).
+2024-05-20 18:07:45 Received interrogation for group (20).
+2024-05-20 18:08:15 Received interrogation for group (20).
+2024-05-20 18:08:45 Received interrogation for group (20).
+2024-05-20 18:09:15 Received interrogation for group (20).
+2024-05-20 18:09:45 Received interrogation for group (20).
+2024-05-20 18:10:15 Received interrogation for group (20).
+2024-05-20 18:10:45 Received interrogation for group (20).
+2024-05-20 18:11:15 Received interrogation for group (20).
+2024-05-20 18:11:45 Received interrogation for group (20).
+2024-05-20 18:11:48 Connection closed 
+2024-05-20 18:14:40 Server started 
+2024-05-20 18:15:27 New connection request from 192.168.211.128 
+2024-05-20 18:15:27 Connection opened 
+2024-05-20 18:15:27 Connection activated 
+2024-05-20 18:15:29 Received interrogation for group (20).
+2024-05-20 18:15:32 Connection closed 
+2024-05-20 18:15:57 New connection request from 192.168.211.128 
+2024-05-20 18:15:57 Connection opened 
+2024-05-20 18:15:57 Connection activated 
+2024-05-20 18:15:59 Received interrogation for group (20).
+2024-05-20 18:16:02 Connection closed 
+2024-05-20 18:16:27 New connection request from 192.168.211.128 
+2024-05-20 18:16:27 Connection opened 
+2024-05-20 18:16:27 Connection activated 
+2024-05-20 18:16:29 Received interrogation for group (20).
+2024-05-20 18:16:32 Connection closed 
+2024-05-20 18:16:57 New connection request from 192.168.211.128 
+2024-05-20 18:16:57 Connection opened 
+2024-05-20 18:16:57 Connection activated 
+2024-05-20 18:16:59 Received interrogation for group (20).
+2024-05-20 18:17:02 Connection closed 
+2024-05-20 18:17:24 Server started 
+2024-05-20 18:17:56 New connection request from 192.168.211.128 
+2024-05-20 18:17:56 Connection opened 
+2024-05-20 18:17:56 Connection activated 
+2024-05-20 18:17:58 Received interrogation for group (20).
+2024-05-20 18:18:01 Connection closed 
+2024-05-20 18:18:26 New connection request from 192.168.211.128 
+2024-05-20 18:18:26 Connection opened 
+2024-05-20 18:18:26 Connection activated 
+2024-05-20 18:18:28 Received interrogation for group (20).
+2024-05-20 18:18:31 Connection closed 
+2024-05-20 19:45:50 Server started 
+2024-05-20 19:45:56 New connection request from 192.168.211.128 
+2024-05-20 19:45:56 Connection opened 
+2024-05-20 19:45:56 Connection activated 
+2024-05-20 19:46:26 Received interrogation for group (20).
+2024-05-20 19:46:29 Connection closed 
+2024-05-20 19:49:53 Server started 
+2024-05-20 19:49:56 New connection request from 192.168.211.128 
+2024-05-20 19:49:56 Connection opened 
+2024-05-20 19:49:56 Connection activated 
+2024-05-20 19:50:25 Received interrogation for group (20).
+2024-05-20 19:50:48 Connection closed 
+2024-05-20 19:52:55 New connection request from 192.168.211.128 
+2024-05-20 19:52:55 Connection opened 
+2024-05-20 19:52:55 Connection activated 
+2024-05-20 19:53:24 Received interrogation for group (20).
+2024-05-20 19:53:34 Connection closed 
+2024-05-20 20:54:10 Server started 
+2024-05-20 20:54:35 New connection request from 192.168.211.128 
+2024-05-20 20:54:35 Connection opened 
+2024-05-20 20:54:35 Connection activated 
+2024-05-20 20:55:05 Received interrogation for group (20).
+2024-05-20 20:55:35 Received interrogation for group (20).
+2024-05-20 20:56:05 Received interrogation for group (20).
+2024-05-20 20:56:35 Received interrogation for group (20).
+2024-05-20 20:57:05 Received interrogation for group (20).
+2024-05-20 20:57:29 Connection closed 
+2024-05-20 20:58:18 New connection request from 192.168.211.128 
+2024-05-20 20:58:18 Connection opened 
+2024-05-20 20:58:18 Connection activated 
+2024-05-20 21:03:02 Server started 
+2024-05-20 21:03:06 New connection request from 192.168.211.128 
+2024-05-20 21:03:06 Connection opened 
+2024-05-20 21:03:06 Connection activated 
+2024-05-20 21:03:13 Connection deactivated 
+2024-05-20 21:03:14 Connection closed 
+2024-05-20 23:59:41 Server started 
+2024-05-20 23:59:46 New connection request from 192.168.211.128 
+2024-05-20 23:59:46 Connection opened 
+2024-05-20 23:59:46 Connection activated 
+2024-05-21 00:00:15 Received interrogation for group (20).
+2024-05-21 00:00:45 Received interrogation for group (20).
+2024-05-21 00:01:15 Received interrogation for group (20).
+2024-05-21 00:01:45 Received interrogation for group (20).
+2024-05-21 00:02:15 Received interrogation for group (20).
+2024-05-21 00:02:45 Received interrogation for group (20).
+2024-05-21 00:03:15 Received interrogation for group (20).
+2024-05-21 00:03:45 Received interrogation for group (20).
+2024-05-21 00:04:15 Received interrogation for group (20).
+2024-05-21 00:04:25 Connection deactivated 
+2024-05-21 00:04:26 Connection closed 
+2024-05-21 00:04:38 New connection request from 192.168.211.128 
+2024-05-21 00:04:38 Connection opened 
+2024-05-21 00:04:38 Connection activated 
+2024-05-21 00:05:08 Received interrogation for group (20).
+2024-05-21 00:05:38 Received interrogation for group (20).
+2024-05-21 00:06:08 Received interrogation for group (20).
+2024-05-21 00:06:38 Received interrogation for group (20).
+2024-05-21 00:07:08 Received interrogation for group (20).
+2024-05-21 00:07:38 Received interrogation for group (20).
+2024-05-21 00:08:08 Received interrogation for group (20).
+2024-05-21 00:08:38 Received interrogation for group (20).
+2024-05-21 00:09:08 Received interrogation for group (20).
+2024-05-21 00:09:38 Received interrogation for group (20).
+2024-05-21 00:10:08 Received interrogation for group (20).
+2024-05-21 00:10:38 Received interrogation for group (20).
+2024-05-21 00:11:08 Received interrogation for group (20).
+2024-05-21 00:11:38 Received interrogation for group (20).
+2024-05-21 00:12:08 Received interrogation for group (20).
+2024-05-21 00:12:38 Received interrogation for group (20).
+2024-05-21 00:13:08 Received interrogation for group (20).
+2024-05-21 00:13:38 Received interrogation for group (20).
+2024-05-21 00:14:08 Received interrogation for group (20).
+2024-05-21 00:14:38 Received interrogation for group (20).
+2024-05-21 00:15:08 Received interrogation for group (20).
+2024-05-21 00:15:38 Received interrogation for group (20).
+2024-05-21 00:16:08 Received interrogation for group (20).
+2024-05-21 00:16:38 Received interrogation for group (20).
+2024-05-21 00:17:08 Received interrogation for group (20).
+2024-05-21 00:17:38 Received interrogation for group (20).
+2024-05-21 00:18:08 Received interrogation for group (20).
+2024-05-21 00:18:38 Received interrogation for group (20).
+2024-05-21 00:19:08 Received interrogation for group (20).
+2024-05-21 00:19:38 Received interrogation for group (20).
+2024-05-21 00:20:08 Received interrogation for group (20).
+2024-05-21 00:20:38 Received interrogation for group (20).
+2024-05-21 00:21:08 Received interrogation for group (20).
+2024-05-21 00:21:38 Received interrogation for group (20).
+2024-05-21 00:22:08 Received interrogation for group (20).
+2024-05-21 00:22:38 Received interrogation for group (20).
+2024-05-21 00:23:08 Received interrogation for group (20).
+2024-05-21 00:23:38 Received interrogation for group (20).
+2024-05-21 00:24:08 Received interrogation for group (20).
+2024-05-21 00:24:38 Received interrogation for group (20).
+2024-05-21 00:25:08 Received interrogation for group (20).
+2024-05-21 00:25:38 Received interrogation for group (20).
+2024-05-21 00:26:08 Received interrogation for group (20).
+2024-05-21 00:26:38 Received interrogation for group (20).
+2024-05-21 00:27:08 Received interrogation for group (20).
+2024-05-21 00:27:38 Received interrogation for group (20).
+2024-05-21 00:28:08 Received interrogation for group (20).
+2024-05-21 00:28:38 Received interrogation for group (20).
+2024-05-21 00:29:08 Received interrogation for group (20).
+2024-05-21 15:31:34 Server started 
+2024-05-21 15:39:29 Server started 
+2024-05-21 15:39:34 New connection request from 192.168.211.128 
+2024-05-21 15:39:34 Connection opened 
+2024-05-21 15:39:34 Connection activated 
+2024-05-21 15:39:51 Connection deactivated 
+2024-05-21 15:39:52 Connection closed 
+2024-05-21 15:40:30 New connection request from 192.168.211.128 
+2024-05-21 15:40:30 Connection opened 
+2024-05-21 15:40:30 Connection activated 
+2024-05-21 15:40:35 Connection deactivated 
+2024-05-21 15:40:36 Connection closed 
+2024-05-21 15:42:04 New connection request from 192.168.211.128 
+2024-05-21 15:42:04 Connection opened 
+2024-05-21 15:42:04 Connection activated 
+2024-05-21 15:42:07 Connection deactivated 
+2024-05-21 15:42:08 Connection closed 
+2024-05-21 15:42:11 New connection request from 192.168.211.128 
+2024-05-21 15:42:11 Connection opened 
+2024-05-21 15:42:11 Connection activated 
+2024-05-21 15:42:12 Connection deactivated 
+2024-05-21 15:42:13 Connection closed 
